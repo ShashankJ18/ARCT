@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Diagrams</title>
+    <style>
+        /* Basic reset and typography */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f7fa;
+            color: #1e293b;
+            line-height: 1.5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        /* Header */
+        .header {
+            padding: 24px 28px 8px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        .header p {
+            color: #475569;
+            margin-top: 6px;
+        }
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: #f8fafc;
+            padding: 0 20px;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        .tab {
+            padding: 14px 24px;
+            font-weight: 500;
+            color: #334155;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.15s ease;
+        }
+        .tab:hover {
+            background: #e9eef3;
+            color: #0f172a;
+        }
+        .tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+            background: white;
+        }
+        /* Diagram area */
+        .diagram-area {
+            padding: 28px;
+            background: white;
+            text-align: center;
+        }
+        .diagram {
+            display: none;
+        }
+        .diagram.active {
+            display: block;
+        }
+        .diagram img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            background: #f1f5f9;
+        }
+        .caption {
+            margin-top: 16px;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+        /* Footer */
+        .footer {
+            padding: 16px 28px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            background: #fafdff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ARCT Diagrams</h1>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="use-case">Use Case</div>
+            <div class="tab" data-tab="architecture">Architecture</div>
+            <div class="tab" data-tab="sequence">Sequence</div>
+        </div>
+
+        <div class="diagram-area">
+            <div id="use-case" class="diagram active">
+                <img src="use-case.png" alt="Use Case Diagram">
+            </div>
+            <div id="architecture" class="diagram">
+                <img src="architecture.png" alt="Architecture Block Diagram">
+            </div>
+            <div id="sequence" class="diagram">
+                <img src="sequence.png" alt="Sequence Diagram">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const diagrams = {
+                'use-case': document.getElementById('use-case'),
+                'architecture': document.getElementById('architecture'),
+                'sequence': document.getElementById('sequence')
+            };
+
+            function activateTab(tabId) {
+                // Deactivate all tabs and diagrams
+                tabs.forEach(t => t.classList.remove('active'));
+                Object.values(diagrams).forEach(d => d.classList.remove('active'));
+
+                // Activate selected
+                const activeTab = document.querySelector(`.tab[data-tab="${tabId}"]`);
+                if (activeTab) activeTab.classList.add('active');
+                if (diagrams[tabId]) diagrams[tabId].classList.add('active');
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    activateTab(tabId);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
